@@ -36,7 +36,7 @@ import org.openftc.easyopencv.OpenCvPipeline;
  */
 
 
-    public class CenterStagePipelineBlue extends OpenCvPipeline
+    public class OpenPipelineMedkit extends OpenCvPipeline
     {
         /*
          * An enum to define the skystone position
