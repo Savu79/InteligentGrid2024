@@ -5,7 +5,6 @@ package org.firstinspires.ftc.teamcode.Hardware;
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -13,11 +12,11 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 @Config
 public class RobotHardware {
 
-    public Servo MicroServo1;
-    public Servo MicroServo2;
-    public Servo AngleControlServo;
+    public Servo PickUpServo;
+    public Servo AirLockServo;
 
     public DcMotorEx ExtentionMotor;
+    public DcMotorEx IntakeMotor;
 
     private HardwareMap hardwareMap;
 
@@ -36,8 +35,11 @@ public class RobotHardware {
     public static double ServoControlMID=0.35; //0.2
     public static double ServoControlMIN=0.02; //0.315
 
-    public static double AvionParcat=1;
-    public static double AvionDecolare=0.75;
+    public static double AirLockServoMIN=1;
+    public static double AirLockServoMAX =0.75;
+
+    public static double PickUpServoMIN =0.75;
+    public static double PickUpServoMAX =0.75;
 
     public enum State {
         TRAJECTORY_1,
@@ -56,14 +58,16 @@ public class RobotHardware {
     }
     public void init(HardwareMap hardwareMap, Telemetry telemetry) {
         //TODO declaram motoare
-        //MicroServo1= hardwareMap.get(Servo.class, "MicroServo1");//albastru
-//        MicroServo2= hardwareMap.get(Servo.class, "MicroServo2");//negru
-//        MicroServo1.setPosition(RobotHardware.MicroServoINCHIS1);
-//        MicroServo2.setPosition(RobotHardware.MicroServoINCHIS2);
+        AirLockServo= hardwareMap.get(Servo.class, "AirLockServo");//negru
+        AirLockServo.setPosition(RobotHardware.AirLockServoMIN);
 
+        PickUpServo= hardwareMap.get(Servo.class, "PickUpServo");//negru
+        PickUpServo.setPosition(RobotHardware.PickUpServoMAX);
 
         ExtentionMotor= hardwareMap.get(DcMotorEx.class, "ExtensionMotor");
         ExtentionMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        IntakeMotor= hardwareMap.get(DcMotorEx.class, "IntakeMotor");
 
 //        backCamera = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"));
 //        pipeline = new SleeveDetection.SkystoneDeterminationPipeline();
