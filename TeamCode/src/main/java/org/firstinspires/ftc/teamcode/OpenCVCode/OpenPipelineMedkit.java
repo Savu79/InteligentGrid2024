@@ -41,7 +41,7 @@ import org.openftc.easyopencv.OpenCvPipeline;
         /*
          * An enum to define the skystone position
          */
-        public enum CenterStagePosition
+        public enum OpenIPosition
         {
             LEFT,
             CENTER,
@@ -101,7 +101,7 @@ import org.openftc.easyopencv.OpenCvPipeline;
         int avg1, avg2;
 
         // Volatile since accessed by OpMode thread w/o synchronization
-        private volatile CenterStagePosition position = CenterStagePosition.LEFT;
+        private volatile OpenIPosition position = OpenIPosition.LEFT;
 
         /*
          * This function takes the RGB frame, converts to YCrCb,
@@ -229,7 +229,7 @@ import org.openftc.easyopencv.OpenCvPipeline;
              */
             if(max>150 && max==avg1) // Was it from region 1?
             {
-                position = CenterStagePosition.RIGHT; // Record our analysis
+                position = OpenIPosition.RIGHT; // Record our analysis
 
                 /*
                  * Draw a solid rectangle on top of the chosen region.
@@ -244,7 +244,7 @@ import org.openftc.easyopencv.OpenCvPipeline;
             }
             else if(max>150 && max == avg2) // Was it from region 2?
             {
-                position = CenterStagePosition.CENTER; // Record our analysis
+                position = OpenIPosition.CENTER; // Record our analysis
 
                 /*
                  * Draw a solid rectangle on top of the chosen region.
@@ -258,7 +258,7 @@ import org.openftc.easyopencv.OpenCvPipeline;
                         -1); // Negative thickness means solid fill
             }
             else {
-                position = CenterStagePosition.LEFT;
+                position = OpenIPosition.LEFT;
 
                 //Imgproc.rectangle(
                 //        input, new Point(0,0), new Point (20, 20), RED, -1
@@ -277,7 +277,7 @@ import org.openftc.easyopencv.OpenCvPipeline;
         /*
          * Call this from the OpMode thread to obtain the latest analysis
          */
-        public CenterStagePosition getAnalysis()
+        public OpenIPosition getAnalysis()
         {
             return position;
         }
