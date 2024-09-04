@@ -27,11 +27,6 @@ public class RobotHardware {
 
     //! VALORI CONSTANTE
 
-    public static double MicroServoDESCHIS1=0.85;
-    public static double MicroServoDESCHIS2=0.35;
-    public static double MicroServoINCHIS1=0.50;
-    public static double MicroServoINCHIS2=0.71;
-
     public static int ExtentionMAX=900;
     public static int ExtentionINT=600;
     public static int ExtentionMID=0;
