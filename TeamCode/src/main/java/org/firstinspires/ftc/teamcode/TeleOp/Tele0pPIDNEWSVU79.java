@@ -16,6 +16,8 @@ public class Tele0pPIDNEWSVU79 extends LinearOpMode {
     private SampleMecanumDrive drive;
     private ExtentionSubsystem extMotor;
     int extTarget=0;
+    boolean isPickedUp = false;
+
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -27,6 +29,29 @@ public class Tele0pPIDNEWSVU79 extends LinearOpMode {
         waitForStart();
 
         while (opModeIsActive()) {
+
+
+            //* AIRLOCK SERVO
+            if(gamepad1.a)
+            {
+                robot.AirlockServo.setPosition(RobotHardware.AirlockServoMAX);
+            }
+            else{
+                robot.AirlockServo.setPosition(RobotHardware.AirlockServoMIN);
+            }
+
+            //* PICKUP SERVO
+            if(gamepad1.b)
+            {
+                if (!isPickedUp) {;
+                    robot.PickUpServo.setPosition(RobotHardware.PickUpServoMIN);
+                    isPickedUp = true;
+                }
+                else {
+                    robot.PickUpServo.setPosition(RobotHardware.PickUpServoMAX);
+                    isPickedUp = false;
+                }
+            }
 
             //* COMANDA DE STOP
             if (isStopRequested())
@@ -61,5 +86,7 @@ public class Tele0pPIDNEWSVU79 extends LinearOpMode {
         }
     }
 }
+
+
 
 
