@@ -13,7 +13,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 public class RobotHardware {
 
     public Servo PickUpServo;
-    public Servo AirLockServo;
+    public Servo AirlockServo;
 
     public DcMotorEx ExtentionMotor;
     public DcMotorEx IntakeMotor;
@@ -35,8 +35,8 @@ public class RobotHardware {
     public static double ServoControlMID=0.35; //0.2
     public static double ServoControlMIN=0.02; //0.315
 
-    public static double AirLockServoMIN=1;
-    public static double AirLockServoMAX =0.75;
+    public static double AirlockServoMIN =1;
+    public static double AirlockServoMAX =0.75;
 
     public static double PickUpServoMIN =0.75;
     public static double PickUpServoMAX =0.75;
@@ -58,8 +58,8 @@ public class RobotHardware {
     }
     public void init(HardwareMap hardwareMap, Telemetry telemetry) {
         //TODO declaram motoare
-        AirLockServo= hardwareMap.get(Servo.class, "AirLockServo");//negru
-        AirLockServo.setPosition(RobotHardware.AirLockServoMIN);
+        AirlockServo = hardwareMap.get(Servo.class, "AirLockServo");//negru
+        AirlockServo.setPosition(RobotHardware.AirlockServoMIN);
 
         PickUpServo= hardwareMap.get(Servo.class, "PickUpServo");//negru
         PickUpServo.setPosition(RobotHardware.PickUpServoMAX);

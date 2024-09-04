@@ -11,14 +11,14 @@ import org.firstinspires.ftc.teamcode.Hardware.RobotHardware;
 
 
 @TeleOp(group ="test")
-public class TestPickUpServo extends LinearOpMode
+public class TestAirlockServo extends LinearOpMode
 {
-    Servo PickUpServo; //servo pentru yellow blocks
-    double pozitie = RobotHardware.PickUpServoMIN;
+    Servo AirlockServo; //servo pentru yellow blocks
+    double pozitie = RobotHardware.AirlockServoMIN;
     //Gamepad gamepad1 = new Gamepad();
 
     public void runOpMode(){
-        PickUpServo= hardwareMap.get(Servo.class, "PickUpServo");//albastru
+        AirlockServo= hardwareMap.get(Servo.class, "AirlockServo");//albastru
 
         waitForStart();
         while(opModeIsActive()) {
@@ -26,8 +26,8 @@ public class TestPickUpServo extends LinearOpMode
 
             pozitie= Range.clip(pozitie, -1, 1);
 
-            PickUpServo.setPosition(pozitie);
-            telemetry.addData("pozitie_pickup: ", PickUpServo.getPosition());
+            AirlockServo.setPosition(pozitie);
+            telemetry.addData("pozitie_airlock: ", AirlockServo.getPosition());
             telemetry.update();
 
         }
