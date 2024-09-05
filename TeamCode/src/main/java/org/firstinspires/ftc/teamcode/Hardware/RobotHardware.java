@@ -14,8 +14,10 @@ public class RobotHardware {
 
     public Servo PickUpServo;
     public Servo AirlockServo;
+    public Servo PivotServo;
+    public Servo CutieServo;
 
-    public DcMotorEx ExtentionMotor;
+    public DcMotorEx ExtensionMotor;
     public DcMotorEx IntakeMotor;
 
     private HardwareMap hardwareMap;
@@ -26,20 +28,24 @@ public class RobotHardware {
 
     //! VALORI CONSTANTE
 
-    public static int ExtentionMAX=900;
+    public static int ExtentionMAX=1350;
     public static int ExtentionINT=600;
     public static int ExtentionMID=0;
-    public static int ExtentionMIN=25;
-
-    public static double ServoControlMAX=0.53; //0.55, 0.58
-    public static double ServoControlMID=0.35; //0.2
-    public static double ServoControlMIN=0.02; //0.315
+    public static int ExtentionMIN=0;
 
     public static double AirlockServoMIN =1;
-    public static double AirlockServoMAX =0.75;
+    public static double AirlockServoMAX =0.75; //TODO
 
-    public static double PickUpServoMIN =0.75;
-    public static double PickUpServoMAX =0.75;
+    public static double PivotServoMIN =0.0801; //*done
+    public static double PivotServoMAX=0;
+
+    public static double CutieServoJOS =0.286;
+    public static double CutieServoSUS=0.557;
+    public static double CutieServoMIN=0;
+
+
+    public static double PickUpServoMIN =0.40; //*done
+    public static double PickUpServoMAX =1;
 
     public enum State {
         TRAJECTORY_1,
@@ -58,14 +64,20 @@ public class RobotHardware {
     }
     public void init(HardwareMap hardwareMap, Telemetry telemetry) {
         //TODO declaram motoare
-        AirlockServo = hardwareMap.get(Servo.class, "AirLockServo");//negru
+        AirlockServo = hardwareMap.get(Servo.class, "AirlockServo");//negru
         AirlockServo.setPosition(RobotHardware.AirlockServoMIN);
 
         PickUpServo= hardwareMap.get(Servo.class, "PickUpServo");//negru
         PickUpServo.setPosition(RobotHardware.PickUpServoMAX);
 
-        ExtentionMotor= hardwareMap.get(DcMotorEx.class, "ExtensionMotor");
-        ExtentionMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        PivotServo= hardwareMap.get(Servo.class, "PivotServo");//negru
+        PivotServo.setPosition(RobotHardware.PivotServoMIN);
+
+        CutieServo= hardwareMap.get(Servo.class, "CutieServo");//negru
+        CutieServo.setPosition(RobotHardware.CutieServoJOS);
+
+        ExtensionMotor= hardwareMap.get(DcMotorEx.class, "ExtensionMotor");
+        ExtensionMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         IntakeMotor= hardwareMap.get(DcMotorEx.class, "IntakeMotor");
 

@@ -15,14 +15,14 @@ public class ExtentionSubsystem extends SubsystemBase {
     private PIDController controller;
 
     private int target=0;
-    public static double P = 0.02;
+    public static double P = 0.5;
     public static double I = 0.0;
-    public static double D = 0.00051;
+    public static double D = 0.006;
 
 
     public ExtentionSubsystem(RobotHardware robot){
         this.robot= robot;
-        EM= robot.ExtentionMotor;
+        EM= robot.ExtensionMotor;
         controller= new PIDController(P,I,D);
     }
 

@@ -14,7 +14,7 @@ import org.firstinspires.ftc.teamcode.Hardware.RobotHardware;
 public class TestPickUpServo extends LinearOpMode
 {
     Servo PickUpServo; //servo pentru yellow blocks
-    double pozitie = RobotHardware.PickUpServoMIN;
+    double pozitie = RobotHardware.PickUpServoMAX;
     //Gamepad gamepad1 = new Gamepad();
 
     public void runOpMode(){
@@ -24,7 +24,7 @@ public class TestPickUpServo extends LinearOpMode
         while(opModeIsActive()) {
             pozitie += 0.0005 * gamepad1.right_stick_y;
 
-            pozitie= Range.clip(pozitie, -1, 1);
+            pozitie= Range.clip(pozitie, 0, 1);
 
             PickUpServo.setPosition(pozitie);
             telemetry.addData("pozitie_pickup: ", PickUpServo.getPosition());

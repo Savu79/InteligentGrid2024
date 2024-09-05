@@ -3,6 +3,7 @@ import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.teamcode.Hardware.RobotHardware;
@@ -30,7 +31,6 @@ public class Tele0pPIDNEWSVU79 extends LinearOpMode {
 
         while (opModeIsActive()) {
 
-
             //* AIRLOCK SERVO
             if(gamepad1.a)
             {
@@ -57,6 +57,9 @@ public class Tele0pPIDNEWSVU79 extends LinearOpMode {
             if (isStopRequested())
             {
                 extMotor.setExtentionTarget(RobotHardware.ExtentionMIN);
+                sleep(500);
+                robot.PivotServo.setPosition(RobotHardware.PivotServoMIN);
+                robot.CutieServo.setPosition(RobotHardware.CutieServoJOS);
             }
 
             //* MUTARE EXTENTION
@@ -67,7 +70,21 @@ public class Tele0pPIDNEWSVU79 extends LinearOpMode {
             }
             if(gamepad2.right_bumper) extTarget= RobotHardware.ExtentionMIN;
             if(gamepad2.left_bumper) extTarget= RobotHardware.ExtentionMAX;
+
+            //robot.ExtensionMotor.setTargetPosition(extTarget);
             extMotor.setExtentionTarget(extTarget);
+
+            //* MUTARE AUTOMATA
+            if(robot.ExtensionMotor.getCurrentPosition() > 1000)
+            {
+                robot.PivotServo.setPosition(RobotHardware.PivotServoMAX);
+                robot.CutieServo.setPosition(RobotHardware.CutieServoSUS);
+            }
+            else
+            {
+                robot.PivotServo.setPosition(RobotHardware.PivotServoMIN);
+                robot.CutieServo.setPosition(RobotHardware.CutieServoJOS);
+            }
 
             //*DRIVE
             drive.setWeightedDrivePower(
@@ -81,7 +98,8 @@ public class Tele0pPIDNEWSVU79 extends LinearOpMode {
             telemetry.addData("x", drive.getPoseEstimate().getX());
             telemetry.addData("y", drive.getPoseEstimate().getY());
             telemetry.addData("heading (deg)", Math.toDegrees(drive.getPoseEstimate().getHeading()));
-            telemetry.addData("ExtentionMotor", robot.ExtentionMotor.getCurrentPosition());
+            telemetry.addData("ExtentionMotor", robot.ExtensionMotor.getCurrentPosition());
+            telemetry.addData("extTarget", extTarget);
             telemetry.update();
         }
     }
