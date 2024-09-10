@@ -5,6 +5,8 @@ import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
@@ -23,18 +25,31 @@ public class AutoBlueFarSimple extends LinearOpMode {
     Pose2d myPose;
     boolean isClosed=false;
     boolean afost=false;
+
+    DcMotorEx leftFront;
+    DcMotorEx rightRear;
+    DcMotorEx rightFront;
+    DcMotorEx leftRear;
+
     OpenCvCamera backCamera;
     OpenPipelineMedkit pipeline;
     ElapsedTime waitTimer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
 
+
     public void runOpMode(){
-        drive = new SampleMecanumDrive(hardwareMap);
+        //drive = new SampleMecanumDrive(hardwareMap);
 
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
 
         backCamera = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"));
         pipeline = new OpenPipelineMedkit();
         backCamera.setPipeline(pipeline);
+        leftFront = hardwareMap.get(DcMotorEx.class, "leftFront");
+        leftRear = hardwareMap.get(DcMotorEx.class, "leftBack");
+        rightRear = hardwareMap.get(DcMotorEx.class, "rightBack");
+        rightFront = hardwareMap.get(DcMotorEx.class, "rightFront");
+        leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
+        leftRear.setDirection(DcMotorSimple.Direction.REVERSE);
 
         backCamera.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
             @Override
@@ -58,8 +73,23 @@ public class AutoBlueFarSimple extends LinearOpMode {
             telemetry.update();
             pi=pipeline.getAnalysis();
         }
-        while(opModeIsActive()){
-            drive.update();
+        if(opModeIsActive()){
+            //drive.update();
+            leftFront.setPower(0.5);
+            leftRear.setPower(0.5);
+            rightFront.setPower(0.5);
+            rightRear.setPower(0.5);
+            sleep(2200);
+            leftFront.setPower(0.5);
+            leftRear.setPower(-0.5);
+            rightFront.setPower(-0.5);
+            rightRear.setPower(0.5);
+            sleep(3300);
+            leftFront.setPower(0);
+            leftRear.setPower(0);
+            rightFront.setPower(0);
+            rightRear.setPower(0);
+
             }
             myPose=drive.getPoseEstimate();
             telemetry.addData("X", myPose.getX());

@@ -5,6 +5,7 @@ package org.firstinspires.ftc.teamcode.Hardware;
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -16,6 +17,7 @@ public class RobotHardware {
     public Servo AirlockServo;
     public Servo PivotServo;
     public Servo CutieServo;
+    public Servo MicroServo;
 
     public DcMotorEx ExtensionMotor;
     public DcMotorEx IntakeMotor;
@@ -28,15 +30,19 @@ public class RobotHardware {
 
     //! VALORI CONSTANTE
 
-    public static int ExtentionMAX=1350;
+    public static int ExtentionMAX=1500;
     public static int ExtentionINT=600;
     public static int ExtentionMID=0;
     public static int ExtentionMIN=0;
 
-    public static double AirlockServoMIN =1;
-    public static double AirlockServoMAX =0.75; //TODO
+    public static double MicroServoReleased = 0.69; //*done
+    public static double MicroServoClosed = 0; //
 
-    public static double PivotServoMIN =0.0801; //*done
+    public static double AirlockServoMIN =1;
+    public static double AirlockServoMAX =0;
+
+    public static double PivotServoMINMIN =0.80; //*done
+    public static double PivotServoMIN =0.75; //*done
     public static double PivotServoMAX=0;
 
     public static double CutieServoJOS =0.286;
@@ -44,7 +50,7 @@ public class RobotHardware {
     public static double CutieServoMIN=0;
 
 
-    public static double PickUpServoMIN =0.40; //*done
+    public static double PickUpServoMIN =0.37; //*done
     public static double PickUpServoMAX =1;
 
     public enum State {
@@ -76,8 +82,14 @@ public class RobotHardware {
         CutieServo= hardwareMap.get(Servo.class, "CutieServo");//negru
         CutieServo.setPosition(RobotHardware.CutieServoJOS);
 
+        MicroServo= hardwareMap.get(Servo.class, "MicroServo");//niggeR
+        MicroServo.setPosition((RobotHardware.MicroServoReleased));
+
         ExtensionMotor= hardwareMap.get(DcMotorEx.class, "ExtensionMotor");
-        ExtensionMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        ExtensionMotor.setTargetPosition(0);
+        ExtensionMotor.setPower(1);
+        ExtensionMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        ExtensionMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
         IntakeMotor= hardwareMap.get(DcMotorEx.class, "IntakeMotor");
 
